@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mensagem para Meu Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Globais e Fundo */
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            /* Gradiente romântico de fundo */
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe6f2 50%, #f7cad0 100%);
+            font-family: 'Poppins', Arial, sans-serif; /* Fonte moderna para o corpo */
+            color: #a6004c; /* Vinho/Rosa Escuro para o texto */
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container da Mensagem (O "Cartão") */
+        .card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            margin: 30px auto;
+            /* Sombra suave para o efeito de "cartão flutuante" */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 10px rgba(255, 102, 153, 0.2);
+            border: 2px solid #ff99cc; /* Borda sutil */
+        }
+
+        .mensagem {
+            font-family: 'Dancing Script', cursive; /* Fonte cursiva/romântica */
+            font-size: 36px;
+            line-height: 1.5;
+            margin: 0;
+            color: #cc0066; /* Cor de destaque para a mensagem */
+            text-shadow: 1px 1px 2px rgba(255, 102, 153, 0.2); /* Sombra suave no texto */
+        }
+        
+        .destaque {
+            font-weight: 700;
+            color: #e60073; /* Cor mais vibrante para destaque */
+        }
+        
+        /* Estilo para Botões */
+        .botao {
+            padding: 12px 25px;
+            background: #ff4d88; /* Rosa Vibrante */
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 30px; /* Borda bem arredondada (Pill shape) */
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease; /* Transição para o efeito hover */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 77, 136, 0.5); /* Sombra chamativa */
+        }
+
+        .botao:hover {
+            background: #e60073; /* Rosa mais escuro no hover */
+            transform: translateY(-3px); /* Efeito de "subir" */
+            box-shadow: 0 6px 20px rgba(255, 77, 136, 0.7);
+        }
+
+        /* Ocultar Áudio */
+        audio { display: none; }
+    </style>
+</head>
+<body>
+
+<audio src="musica2.mp3" autoplay loop></audio>
+
+<button class="botao" onclick="location.href='index.html'">❤ Voltar</button>
+
+<div class="card">
+    <p class="mensagem">
+        Meu amor, nesses <span class="destaque">3 meses</span> eu descobri o quanto você ilumina minha vida.
+        Cada momento ao seu lado é especial e cada sorriso seu faz meu dia valer a pena.
+        Obrigado por tudo que vivemos e por tudo que ainda vamos viver.
+        <br><br>
+        Eu te amo mais do que consigo escrever aqui <span class="destaque">❤❤❤</span>
+    </p>
+</div>
+
+<button class="botao" onclick="location.href='fotos.html'">Ver nossas fotos</button>
+
+</body>
+</html>

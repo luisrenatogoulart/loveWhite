@@ -1,0 +1,267 @@
+
+
+
+<!-- mensagem.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mensagem</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #ffe6f2;
+            font-family: Arial, sans-serif;
+            color: #cc0066;
+            text-align: center;
+        }
+        .mensagem {
+            font-size: 26px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+        .voltar {
+            padding: 10px 20px;
+            background: #ff4d88;
+            color: white;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        audio { display:none; }
+    </style>
+</head>
+<body>
+
+<audio src="musica2.mp3" autoplay loop></audio>
+<button class="voltar" onclick="location.href='index.html'">Voltar</button>
+
+<p class="mensagem">
+    Meu amor, nesses 3 meses eu descobri o quanto você ilumina minha vida.
+    Cada momento ao seu lado é especial e cada sorriso seu faz meu dia valer a pena.
+    Obrigado por tudo que vivemos e por tudo que ainda vamos viver.
+    <br><br>
+    Eu te amo mais do que consigo escrever aqui ❤
+</p>
+
+<button class="voltar" onclick="location.href='fotos.html'">Ver nossas fotos</button>
+
+</body>
+</html>
+
+
+<!-- fotos.html ultimate -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Galeria</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9ecb, #ff4d88, #c81d77);
+            background-size: 300% 300%;
+            animation: bgMove 10s infinite alternate ease-in-out;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* FIRELIES */
+        .firefly {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: fly 8s infinite ease-in-out;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0,0) scale(1); opacity: 0.5; }
+            50% { transform: translate(40px, -60px) scale(1.4); opacity: 1; }
+            100% { transform: translate(-20px, 40px) scale(1); opacity: 0.4; }
+        }
+
+        /* Quadro central */
+        .quadro {
+            width: 92vw;
+            max-width: 480px;
+            height: 80vh;
+            max-height: 700px;
+            background: rgba(255, 240, 245, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            box-shadow: 0 0 25px rgba(255, 0, 120, 0.45), 0 0 60px rgba(255, 100, 150, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Carrossel com fade */
+        .galeria-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .foto {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            scroll-snap-align: center;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Botão voltar */
+        .voltar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 22px;
+            background: rgba(255, 70, 140, 0.9);
+            color: white;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 20;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Menu inferior */
+        .menu {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            z-index: 30;
+        }
+
+        .icon {
+            font-size: 30px;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+
+        /* Frases */
+        .frase {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.6);
+            animation: fraseFade 6s infinite;
+        }
+
+        @keyframes fraseFade {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Botão de música */
+        .music-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 60, 120, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+
+<audio id="musica" src="musica3.mp3" autoplay loop></audio>
+<button class="voltar" onclick="location.href='index.html'">⟵</button>
+<button class="music-btn" onclick="toggleMusic()">🔊</button>
+
+<div class="menu">
+    <div class="icon">❤️</div>
+    <div class="icon">💑</div>
+    <div class="icon">💘</div>
+    <div class="icon">🌹</div>
+</div>
+
+<!-- Fireflies -->
+<script>
+    for(let i = 0; i < 25; i++){
+        const f = document.createElement('div');
+        f.className = 'firefly';
+        f.style.left = Math.random()*100 + 'vw';
+        f.style.top = Math.random()*100 + 'vh';
+        f.style.animationDelay = Math.random()*5 + 's';
+        document.body.appendChild(f);
+    }
+</script>
+
+<div class="quadro">
+    <div class="frase" id="frase"></div>
+
+    <div class="galeria-container" id="galeria">
+        <img class="foto" src="fotos/1.jpeg" />
+        <img class="foto" src="fotos/2.jpeg" />
+        <img class="foto" src="fotos/3.jpeg" />
+        <img class="foto" src="fotos/4.jpeg" />
+    </div>
+</div>
+
+<script>
+    /* Frases romanticas */
+    const frases = [
+        "Eu amo cada detalhe seu ❤️",
+        "Você é meu pedaço favorito do mundo 💕",
+        "Meu coração sempre te chama 💘",
+        "Você é a melhor parte do meu dia 🌹",
+        "Quero você pra sempre comigo 💞",
+        "Te amar é fácil demais 💗",
+        "Você é meu sonho favorito ✨"
+    ];
+    let i = 0;
+    setInterval(() => {
+        document.getElementById('frase').textContent = frases[i];
+        i = (i + 1) % frases.length;
+    }, 6000);
+
+    /* Botão música */
+    function toggleMusic(){
+        const m = document.getElementById('musica');
+        const btn = document.querySelector('.music-btn');
+        if(m.paused){ m.play(); btn.textContent = '🔊'; }
+        else { m.pause(); btn.textContent = '🔈'; }
+    }
+</script>
+
+</body>
+</html>

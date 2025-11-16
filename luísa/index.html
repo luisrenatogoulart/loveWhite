@@ -1,0 +1,43 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feliz 3 Meses</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffe6f2;
+            font-family: Arial, sans-serif;
+        }
+        .btn-inicio {
+            padding: 20px 40px;
+            background: #ff4d88;
+            color: white;
+            font-size: 28px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .btn-inicio:hover {
+            background: #e6005c;
+            transform: scale(1.05);
+        }
+        audio { display:none; }
+    </style>
+</head>
+<body>
+
+<audio src="musica1.mp3" autoplay loop></audio>
+<button class="btn-inicio" onclick="location.href='mensagem.html'">Feliz 3 meses, clique aqui</button>
+
+</body>
+</html>
