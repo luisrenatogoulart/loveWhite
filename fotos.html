@@ -35,18 +35,75 @@
     .slide[data-pos="-2"], .slide[data-pos="2"]{transform:translate(-50%,-50%) translateX(calc(var(--pos)* -70%)) translateZ(-260px) rotateY(calc(var(--pos)* 25deg)) scale(.62);opacity:.6;z-index:30}
     .slide.hidden{opacity:0;pointer-events:none}
 
-    /* HUD */
-    .top-hud{position:absolute;left:50%;transform:translateX(-50%);top:14px;color:#fff;z-index:70;text-shadow:0 4px 18px rgba(0,0,0,0.5);font-weight:600}
-    .timer{font-size:14px;background:rgba(0,0,0,0.18);padding:6px 12px;border-radius:999px}
+    /* Legenda/Mensagem da Foto */
+    .caption{
+      position:absolute;
+      bottom:0; 
+      left:0;right:0;
+      padding:10px 15px;
+      background:rgba(0,0,0,0.6);
+      color:white;
+      font-size:14px;
+      text-align:center;
+      z-index:60; 
+      max-height: 25%;
+      overflow: hidden;
+      transition: opacity 300ms, transform 300ms; 
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    
+    /* A legenda só aparece no slide ativo */
+    .slide[data-pos="0"] .caption {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* HUD - Ajustado para o topo (somente título) */
+    .top-hud{
+      position:absolute;left:50%;transform:translateX(-50%);top:14px;
+      color:#fff;z-index:70;
+      text-shadow:0 4px 18px rgba(0,0,0,0.5);font-weight:700;
+      font-size: 18px; 
+    }
 
     .controls{position:absolute;right:14px;top:12px;display:flex;gap:10px;z-index:70}
     .music{background:linear-gradient(135deg,#ff7bb2,#ff2d7a);border:0;padding:10px;border-radius:999px;color:white;font-size:16px;cursor:pointer;box-shadow:0 8px 26px rgba(255,80,140,0.18)}
 
     .back{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.2);color:#fff;padding:8px 12px;border-radius:10px;border:0;z-index:70}
 
-    /* bottom menu */
-    .bottom-menu{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:18px;z-index:70}
-    .menu-btn{background:transparent;border:0;color:#fff;font-size:22px;padding:8px;border-radius:10px;text-shadow:0 6px 18px rgba(255,120,170,0.14);cursor:pointer}
+    /* bottom menu - Centralizado e ajustado para alinhar o timer */
+    .bottom-menu{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:12px;
+      display:flex;
+      align-items: center; 
+      gap:8px; 
+      width: 90%; 
+      max-width: 480px;
+      z-index:70;
+    }
+    
+    /* Timer - Estilizado para se parecer com um botão, mas com texto */
+    .timer{
+      font-size:14px;
+      padding: 6px 12px;
+      font-weight: 500;
+      text-align: center;
+      flex-grow: 1; 
+      background: rgba(255, 255, 255, 0.1); 
+      border-radius: 999px; 
+      margin: 0 4px; 
+    }
+
+    /* botões de controle e o timer agora usam a mesma classe base 'menu-btn' */
+    .menu-btn{
+      background:transparent;border:0;color:#fff;font-size:22px;padding:8px;
+      border-radius:10px;text-shadow:0 6px 18px rgba(255,120,170,0.14);cursor:pointer;
+      flex-shrink: 0; 
+    }
     .menu-btn:hover{transform:translateY(-4px)}
 
     /* hearts & fireflies */
@@ -63,32 +120,34 @@
 </head>
 <body>
 
-  <!-- Splash / Intro -->
-  <div id="splash" aria-hidden="false">
-    <div class="splash-card">
-      <h1>Para o meu amor</h1>
-      <p>3 meses de nós — clique em começar e veja nossas lembranças ✨</p>
-      <div style="margin-bottom:12px"><span class="timer" id="splash-timer"></span></div>
-      <button class="start-btn" id="startBtn">Começar</button>
-    </div>
-  </div>
-
   <div class="stage" aria-hidden="true">
     <div class="frame">
-      <div class="top-hud"><span class="timer" id="timer">Juntos há 0 dias</span></div>
+      <div class="top-hud">Nosso Lugar</div> 
       <button class="back" onclick="location.href='index.html'">⟵</button>
       <div class="controls"><button class="music" id="musicBtn">🔊</button></div>
 
       <div class="carousel" id="carousel">
-        <!-- slides (troque caminhos das imagens conforme necessário) -->
-        <div class="slide" data-idx="0"><img src="fotos/1.jpeg" alt="foto 1"></div>
-        <div class="slide" data-idx="1"><img src="fotos/2.jpeg" alt="foto 2"></div>
-        <div class="slide" data-idx="2"><img src="fotos/3.jpeg" alt="foto 3"></div>
-        <div class="slide" data-idx="3"><img src="fotos/4.jpeg" alt="foto 4"></div>
-      </div>
+        <div class="slide" data-idx="0">
+            <img src="fotos/1.jpeg" alt="foto 1">
+            <p class="caption">Nosso primeiro encontro, o começo de tudo! ❤️</p>
+        </div>
+        <div class="slide" data-idx="1">
+            <img src="fotos/2.jpeg" alt="foto 2">
+            <p class="caption">O dia no parque, com você aprendi o que é felicidade.</p>
+        </div>
+        <div class="slide" data-idx="2">
+            <img src="fotos/3.jpeg" alt="foto 3">
+            <p class="caption">Aquele nosso momento favorito, sempre juntos.</p>
+        </div>
+        <div class="slide" data-idx="3">
+            <img src="fotos/4.jpeg" alt="foto 4">
+            <p class="caption">Três meses de amor e cumplicidade. Que venham muitos mais!</p>
+        </div>
+        </div>
 
       <div class="bottom-menu">
         <button class="menu-btn" id="prev">◀</button>
+        <span class="timer" id="timer">Juntos há 0 dias</span>
         <button class="menu-btn" id="pause">❚❚</button>
         <button class="menu-btn" id="next">▶</button>
       </div>
@@ -96,7 +155,6 @@
     </div>
   </div>
 
-  <!-- audio element (can be changed) -->
   <audio id="audio" src="musica3.mp3" loop></audio>
 
   <script>
@@ -112,9 +170,12 @@
       el.textContent = `Juntos há ${dias} dias · ${horas}h ${minutos}m ${segundos}s`;
     }
     const timerEl = document.getElementById('timer');
-    const splashTimerEl = document.getElementById('splash-timer');
-    setInterval(()=>{atualizarTimerEl(timerEl);atualizarTimerEl(splashTimerEl)},1000);
-    atualizarTimerEl(timerEl);atualizarTimerEl(splashTimerEl);
+    // REMOVIDO: const splashTimerEl = document.getElementById('splash-timer');
+    
+    // Atualiza apenas o timer principal
+    setInterval(()=>{atualizarTimerEl(timerEl)},1000); 
+    atualizarTimerEl(timerEl);
+    
 
     /* ====== Hearts + fireflies ====== */
     function criarParticulas(){
@@ -177,6 +238,8 @@
     /* ====== Splash behavior ====== */
     const splash = document.getElementById('splash');const startBtn = document.getElementById('startBtn');
     startBtn.addEventListener('click', ()=>{
+      // Tenta iniciar o áudio aqui, resolvendo o problema de autoplay bloqueado pelo navegador
+      audio.play().catch(e => console.log("Áudio não pôde ser iniciado automaticamente."));
       splash.style.transition='opacity .6s ease';splash.style.opacity='0';setTimeout(()=>{splash.style.display='none';document.querySelector('.stage').setAttribute('aria-hidden','false');},620);
     });
 
