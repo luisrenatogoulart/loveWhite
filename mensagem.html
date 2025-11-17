@@ -49,7 +49,7 @@
             color: #e60073; /* Cor mais vibrante para destaque */
         }
         
-        /* Estilo para Botões */
+        /* Estilo para Botões Padrão */
         .botao {
             padding: 12px 25px;
             background: #ff4d88; /* Rosa Vibrante */
@@ -72,13 +72,37 @@
             box-shadow: 0 6px 20px rgba(255, 77, 136, 0.7);
         }
 
+        /* Estilo para o botão flutuante de controle de áudio */
+        #controlarAudio {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: rgba(255, 77, 136, 0.7); /* Rosa transparente */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 50%; /* Circular */
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        #controlarAudio:hover {
+            background: #ff4d88;
+        }
+
         /* Ocultar Áudio */
         audio { display: none; }
     </style>
 </head>
 <body>
 
-<audio src="musica2.mp3" autoplay loop></audio>
+<!-- Configuração do Áudio: Mantém 'loop' e 'muted' para tentar autoplay. Adiciona ID. -->
+<audio id="musicaFundo" src="musicas/2[1, 2, 3] João Bosco e Vinícius - Magia e Mistério ⧸ Quero provar que te amo (oficial) [jIuhAAEegwk]2.mp3" autoplay loop muted></audio>
+
+<!-- Novo botão de controle de áudio no canto superior direito -->
+<button id="controlarAudio" onclick="toggleAudio()">🔇</button>
 
 <button class="botao" onclick="location.href='index.html'">❤ Voltar</button>
 
@@ -93,6 +117,38 @@
 </div>
 
 <button class="botao" onclick="location.href='fotos.html'">Ver nossas fotos</button>
+
+<script>
+    // Referências aos elementos
+    const audio = document.getElementById("musicaFundo");
+    const audioBtn = document.getElementById("controlarAudio");
+
+    // 🔊 Garante que o áudio seja carregado
+    audio.load();
+
+    // 🛑 Inicia mutado para permitir autoplay
+    audio.play().catch(() => {
+        console.log("Autoplay mutado permitido.");
+    });
+
+    // 🎵 Alternar áudio
+    function toggleAudio() {
+        if (audio.muted) {
+            audio.muted = false;  // Liga áudio
+            audio.play();         // Garante que comece a tocar
+            audioBtn.textContent = "🔊";
+            audioBtn.style.background = "#ff4d88";
+        } else {
+            audio.muted = true;   // Desliga áudio
+            audioBtn.textContent = "🔇";
+            audioBtn.style.background = "rgba(255, 77, 136, 0.7)";
+        }
+    }
+
+    // Ajusta ícone inicial conforme estado real do áudio
+    audioBtn.textContent = audio.muted ? "🔇" : "🔊";
+</script>
+
 
 </body>
 </html>

@@ -1,0 +1,8 @@
+Para baixar videos do youtube use:
+
+pip install --upgrade yt-dlp (instalar yt-dlp)
+python3 -m venv .venv (criar o ambiente .venv)
+source .venv/bin/activate (entrar no ambiente venv)
+deactivate (sair  do ambiente venv)
+depois procurar o venv e apagar a pasta.
+
