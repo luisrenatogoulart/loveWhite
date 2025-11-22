@@ -4,25 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mensagem para Meu Amor</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Estilos Globais e Fundo */
+        /* ======== ANIMAÇÃO DE TRANSIÇÃO ======== */
+        body {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* ======== FUNDO COM CORAÇÕES FLUTUANDO ======== */
         body {
             margin: 0;
             padding: 40px 20px;
-            /* Gradiente romântico de fundo */
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe6f2 50%, #f7cad0 100%);
-            font-family: 'Poppins', Arial, sans-serif; /* Fonte moderna para o corpo */
-            color: #a6004c; /* Vinho/Rosa Escuro para o texto */
+            background: #ffe6f2;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #a6004c;
             text-align: center;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
-        /* Container da Mensagem (O "Cartão") */
+        /* Corações flutuando */
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 25px;
+            color: #ff4d88;
+            animation: subir 6s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes subir {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(-120vh) translateX(20px); opacity: 0; }
+        }
+
+        /* ======== CARTÃO ======== */
         .card {
             background-color: white;
             padding: 40px;
@@ -30,125 +57,182 @@
             max-width: 700px;
             width: 100%;
             margin: 30px auto;
-            /* Sombra suave para o efeito de "cartão flutuante" */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 10px rgba(255, 102, 153, 0.2);
-            border: 2px solid #ff99cc; /* Borda sutil */
+            animation: aparecer 1.5s ease;
+            border: 3px solid #ff66aa;
+            box-shadow:
+                0 0 15px #ff66aa,
+                0 0 35px rgba(255, 51, 153, 0.5);
+        }
+
+        @keyframes aparecer {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .mensagem {
-            font-family: 'Dancing Script', cursive; /* Fonte cursiva/romântica */
-            font-size: 36px;
-            line-height: 1.5;
-            margin: 0;
-            color: #cc0066; /* Cor de destaque para a mensagem */
-            text-shadow: 1px 1px 2px rgba(255, 102, 153, 0.2); /* Sombra suave no texto */
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            line-height: 1.55;
+            color: #cc0066;
+            white-space: pre-line; /* Mantém quebras de linha */
         }
-        
-        .destaque {
-            font-weight: 700;
-            color: #e60073; /* Cor mais vibrante para destaque */
-        }
-        
-        /* Estilo para Botões Padrão */
+
+        /* ======== BOTÃO NEON ======== */
         .botao {
-            padding: 12px 25px;
-            background: #ff4d88; /* Rosa Vibrante */
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 30px; /* Borda bem arredondada (Pill shape) */
+            padding: 15px 30px;
+            margin: 20px 10px;
+            border-radius: 40px;
             border: none;
             cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease; /* Transição para o efeito hover */
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
             text-transform: uppercase;
+            background: #ff1a75;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 77, 136, 0.5); /* Sombra chamativa */
+            box-shadow:
+                0 0 5px #ff1a75,
+                0 0 15px #ff1a75,
+                0 0 25px #ff1a75,
+                0 0 40px #ff1a75;
+            transition: 0.3s;
         }
 
         .botao:hover {
-            background: #e60073; /* Rosa mais escuro no hover */
-            transform: translateY(-3px); /* Efeito de "subir" */
-            box-shadow: 0 6px 20px rgba(255, 77, 136, 0.7);
+            transform: scale(1.05);
+            box-shadow:
+                0 0 20px #ff4da6,
+                0 0 40px #ff4da6,
+                0 0 60px #ff4da6;
         }
 
-        /* Estilo para o botão flutuante de controle de áudio */
+        /* Botão do áudio */
         #controlarAudio {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 10px 15px;
-            background: rgba(255, 77, 136, 0.7); /* Rosa transparente */
-            color: white;
-            font-size: 18px;
+            padding: 12px 15px;
+            background: rgba(255, 77, 136, 0.7);
+            border-radius: 50%;
             border: none;
-            border-radius: 50%; /* Circular */
+            color: white;
+            font-size: 20px;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: background 0.3s;
+            box-shadow: 0 0 10px #ff4d88;
         }
         #controlarAudio:hover {
             background: #ff4d88;
         }
 
-        /* Ocultar Áudio */
         audio { display: none; }
     </style>
 </head>
 <body>
 
-<!-- Configuração do Áudio: Mantém 'loop' e 'muted' para tentar autoplay. Adiciona ID. -->
-<audio id="musicaFundo" src="musicas/2[1, 2, 3] João Bosco e Vinícius - Magia e Mistério ⧸ Quero provar que te amo (oficial) [jIuhAAEegwk]2.mp3" autoplay loop muted></audio>
-
-<!-- Novo botão de controle de áudio no canto superior direito -->
+<audio id="musicaFundo" src="musicas/2.mp3" autoplay loop muted></audio>
 <button id="controlarAudio" onclick="toggleAudio()">🔇</button>
 
-<button class="botao" onclick="location.href='index.html'">❤ Voltar</button>
+<button class="botao" onclick="mudarPagina('../index.html')">❤ Voltar</button>
 
 <div class="card">
     <p class="mensagem">
-        Meu amor, nesses <span class="destaque">3 meses</span> eu descobri o quanto você ilumina minha vida.
-        Cada momento ao seu lado é especial e cada sorriso seu faz meu dia valer a pena.
-        Obrigado por tudo que vivemos e por tudo que ainda vamos viver.
-        <br><br>
-        Eu te amo mais do que consigo escrever aqui <span class="destaque">❤❤❤</span>
+Hoje completamos 3 meses juntos… e ainda assim parece que te conheço desde muito antes, como se meu coração tivesse te escolhido muito antes de eu perceber.
+
+Três meses podem ser poucos, mas para mim eles significam tanto…  
+São 3 meses de sentimentos crescendo,  
+de sorrisos que iluminam meus dias,  
+de conversas que aquecem minha alma,  
+e de momentos que guardo como pequenos tesouros dentro de mim.  
+Até nossos atritos são especiais — do jeitinho único que só a gente entende.
+
+Você mudou minha rotina.  
+Mudou meu jeito de ver o mundo.  
+Mudou meu coração.  
+E às vezes eu até penso que não mereço tudo isso… mas sou grato por cada segundo ao seu lado.
+
+Você me trouxe leveza, paz e uma felicidade tão sincera que às vezes nem parece real.
+
+Eu te admiro.  
+Eu te respeito.  
+Eu te quero bem em cada detalhe.  
+E eu te amo em cada pedacinho do meu coração.
+
+Obrigado por ficar, por caminhar ao meu lado, por escolher estar aqui.  
+Que esses 3 meses sejam apenas o começo de uma história linda.
+
+“Nesse dia eu joguei sua blusa no chão do cinema sujo de coca-cola.”  
+“Nesse dia a gente deu nosso primeiro beijo.”  
+“Nesse dia você ficou bicuda comigo.”  
+“Nesse dia eu só queria ficar agarradinho com você.”
+
+Eu amo cada parte de você.  
+Eu amo o que somos juntos.  
+Eu amo nós dois.
+
+Feliz 3 meses, minha branquinha.  
+Que venham muitos outros — com mais risadas, mais abraços, mais planos e cada vez mais amor.
+
+Hoje e sempre… eu sou seu.  
+Eu te amo ❤❤❤
     </p>
 </div>
 
-<button class="botao" onclick="location.href='fotos.html'">Ver nossas fotos</button>
+<button class="botao" onclick="mudarPagina('fotos.html')">Ver nossas fotos</button>
 
 <script>
-    // Referências aos elementos
-    const audio = document.getElementById("musicaFundo");
-    const audioBtn = document.getElementById("controlarAudio");
+    /* ===== CORAÇÕES FLUTUANDO ===== */
+    function criarCoracoes() {
+        const coracao = document.createElement("div");
+        coracao.classList.add("heart");
+        coracao.innerHTML = "❤";
+        coracao.style.left = Math.random() * 100 + "vw";
+        coracao.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        document.body.appendChild(coracao);
 
-    // 🔊 Garante que o áudio seja carregado
-    audio.load();
+        setTimeout(() => coracao.remove(), 7000);
+    }
+    setInterval(criarCoracoes, 500);
 
-    // 🛑 Inicia mutado para permitir autoplay
-    audio.play().catch(() => {
-        console.log("Autoplay mutado permitido.");
-    });
+    /* ===== CONTROLE DE ÁUDIO ===== */
+const audio = document.getElementById("musicaFundo");
+const audioBtn = document.getElementById("controlarAudio");
 
-    // 🎵 Alternar áudio
-    function toggleAudio() {
-        if (audio.muted) {
-            audio.muted = false;  // Liga áudio
-            audio.play();         // Garante que comece a tocar
-            audioBtn.textContent = "🔊";
-            audioBtn.style.background = "#ff4d88";
-        } else {
-            audio.muted = true;   // Desliga áudio
-            audioBtn.textContent = "🔇";
-            audioBtn.style.background = "rgba(255, 77, 136, 0.7)";
-        }
+// Não tentar tocar imediatamente
+audio.muted = true;
+
+/* ATIVA A MÚSICA NO PRIMEIRO CLIQUE NA TELA */
+function iniciarAudio() {
+    audio.muted = false;
+    audio.play().catch(()=>{});
+    audioBtn.textContent = "🔊";
+
+    document.removeEventListener("click", iniciarAudio);
+    document.removeEventListener("touchstart", iniciarAudio);
+}
+
+document.addEventListener("click", iniciarAudio);
+document.addEventListener("touchstart", iniciarAudio);
+
+/* Botão de alternância */
+function toggleAudio() {
+    audio.muted = !audio.muted;
+    audioBtn.textContent = audio.muted ? "🔇" : "🔊";
+
+    if (!audio.muted) audio.play();
+}
+
+
+    /* ===== TRANSIÇÃO DE PÁGINA ===== */
+    function mudarPagina(destino) {
+        document.body.style.opacity = "0";
+        setTimeout(()=>{ window.location.href = destino }, 800);
     }
 
-    // Ajusta ícone inicial conforme estado real do áudio
-    audioBtn.textContent = audio.muted ? "🔇" : "🔊";
+    /* Ativa fade-in inicial */
+    window.onload = () => {
+        document.body.classList.add("loaded");
+    };
 </script>
-
 
 </body>
 </html>

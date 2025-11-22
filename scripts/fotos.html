@@ -48,7 +48,55 @@
     .slide[data-pos="0"] .caption{opacity:1;transform:translateY(0)}
 
     .top-hud{position:absolute;left:50%;transform:translateX(-50%);top:14px;color:#fff;z-index:70;text-shadow:0 4px 18px rgba(0,0,0,0.5);font-weight:700;font-size:18px}
-    .back{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.2);color:#fff;padding:8px 12px;border-radius:10px;border:0;z-index:70}
+
+    /* BOTÕES SUPERIORES */
+    .top-buttons {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      gap: 10px;
+      z-index: 90;
+    }
+
+    .msg-btn, .back {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background .3s, transform .3s;
+    }
+
+    .msg-btn:hover, .back:hover {
+      background: rgba(255, 110, 170, 0.5);
+      transform: scale(1.08);
+    }
+
+    /* BOTÃO DE MÚSICA */
+    .music-btn {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background .3s, transform .3s, filter .3s;
+    }
+    .music-btn:hover {
+      background: rgba(255, 110, 170, 0.55);
+      transform: scale(1.1);
+    }
+    .music-btn.paused {
+      filter: grayscale(70%) brightness(0.7);
+    }
 
     /* Botões direita/esquerda */
     .arrow{
@@ -66,7 +114,6 @@
     .timer{font-size:14px;padding:6px 12px;background:rgba(255,255,255,0.1);border-radius:999px;color:white}
 
     .heart{position:fixed;font-size:20px;pointer-events:none;z-index:30;opacity:.85}
-    .firefly{position:fixed;width:6px;height:6px;border-radius:50%;pointer-events:none;z-index:20;box-shadow:0 0 12px rgba(255,180,220,0.9)}
 
   </style>
 </head>
@@ -86,44 +133,145 @@
     <div class="frame">
 
       <div class="top-hud">Nosso Lugar</div>
-      <button class="back" onclick="location.href='index.html'">⟵</button>
 
-      <!-- BOTÕES DE SETA -->
+      <div class="top-buttons">
+        <button class="back" onclick="location.href='../index.html'">⟵</button>
+        <button class="msg-btn" onclick="location.href='mensagem.html'">💌</button>
+
+        <!-- BOTÃO DE MÚSICA -->
+        <button class="music-btn" id="musicBtn">🎵</button>
+      </div>
+
       <button class="arrow" id="prev">❮</button>
       <button class="arrow" id="next">❯</button>
 
       <div class="carousel" id="carousel">
 
         <div class="slide" data-idx="0">
-          <img src="fotos/1.jpeg">
-          <p class="caption">Nosso primeiro encontro ❤️</p>
+          <img src="fotos/28.jpeg">
+          <p class="caption">Nosso primeiro encontro</p>
         </div>
 
         <div class="slide" data-idx="1">
-          <img src="fotos/2.jpeg">
-          <p class="caption">O dia no parque ✨</p>
+          <img src="fotos/7.jpeg">
+          <p class="caption">Você é meu lugar favorito no mundo</p>
         </div>
 
         <div class="slide" data-idx="2">
-          <img src="fotos/3.jpeg">
-          <p class="caption">Aquele momento especial 💕</p>
+          <img src="fotos/10.jpeg">
+          <p class="caption">Amar você é a melhor parte dos meus dias</p>
         </div>
 
         <div class="slide" data-idx="3">
-          <img src="fotos/4.jpeg">
-          <p class="caption">3 meses de amor! 💗</p>
+          <img src="fotos/12.jpeg">
+          <p class="caption">Meu coração sorri quando penso em você</p>
         </div>
 
         <div class="slide" data-idx="4">
-          <img src="fotos/5.jpeg">
-          <p class="caption">3 meses de amor! 💗</p>
+          <img src="fotos/13.jpeg">
+          <p class="caption">Você é meu sonho que virou rotina</p>
         </div>
 
         <div class="slide" data-idx="5">
-          <img src="fotos/13.jpeg">
-          <p class="caption">3 meses de amor! 💗</p>
+          <img src="fotos/14.jpeg">
+          <p class="caption">Cada momento ao seu lado é especial</p>
         </div>
 
+        <div class="slide" data-idx="6">
+          <img src="fotos/15.jpeg">
+          <p class="caption">Te amar é simples, leve e verdadeiro</p>
+        </div>
+
+        <div class="slide" data-idx="7">
+          <img src="fotos/16.jpeg">
+          <p class="caption">Você é minha paz em forma de gente</p>
+        </div>
+
+        <div class="slide" data-idx="8">
+          <img src="fotos/17.jpeg">
+          <p class="caption">Meu amor por você só cresce</p>
+        </div>
+
+        <div class="slide" data-idx="9">
+          <img src="fotos/18.jpeg">
+          <p class="caption">Com você, tudo faz sentido</p>
+        </div>
+
+        <div class="slide" data-idx="10">
+          <img src="fotos/19.jpeg">
+          <p class="caption">Você é meu melhor acaso</p>
+        </div>
+
+        <div class="slide" data-idx="11">
+          <img src="fotos/20.jpeg">
+          <p class="caption">Seu sorriso ilumina qualquer dia meu</p>
+        </div>
+
+        <div class="slide" data-idx="12">
+          <img src="fotos/21.jpeg">
+          <p class="caption">Te quero hoje, amanhã e sempre</p>
+        </div>
+
+        <div class="slide" data-idx="13">
+          <img src="fotos/23.jpeg">
+          <p class="caption">Seu abraço é meu porto seguro</p>
+        </div>
+
+        <div class="slide" data-idx="14">
+          <img src="fotos/24.jpeg">
+          <p class="caption">Você é a poesia que eu nunca soube escrever</p>
+        </div>
+
+        <div class="slide" data-idx="15">
+          <img src="fotos/25.jpeg">
+          <p class="caption">Amar você é a minha melhor decisão</p>
+        </div>
+
+        <div class="slide" data-idx="16">
+          <img src="fotos/26.jpeg">
+          <p class="caption">Seu amor faz tudo ficar mais bonito</p>
+        </div>
+
+        <div class="slide" data-idx="17">
+          <img src="fotos/1.jpeg">
+          <p class="caption">Você é meu presente preferido do destino</p>
+        </div>
+
+        <div class="slide" data-idx="18">
+          <img src="fotos/29.jpeg">
+          <p class="caption">Meu coração é seu</p>
+        </div>
+
+        <div class="slide" data-idx="19">
+          <img src="fotos/3.jpeg">
+          <p class="caption">Você é o motivo do meu brilho nos olhos.</p>
+        </div>
+
+        <div class="slide" data-idx="20">
+          <img src="fotos/31.jpeg">
+          <p class="caption">Você transforma dias comuns em dias mágicos</p>
+        </div>
+
+        <div class="slide" data-idx="21">
+          <img src="fotos/4.jpeg">
+          <p class="caption">Só você me faz sentir assim</p>
+        </div>
+
+        <div class="slide" data-idx="22">
+          <img src="fotos/5.jpeg">
+          <p class="caption">Você é o meu para sempre favorito</p>
+        </div>
+
+        <div class="slide" data-idx="23">
+          <img src="fotos/6.jpeg">
+          <p class="caption">Cada detalhe seu me encanta</p>
+        </div>
+
+        <div class="slide" data-idx="24">
+          <img src="fotos/7.jpeg">
+          <p class="caption">Na minha vida, seu nome é sinônimo de felicidade</p>
+        </div>
+        
       </div>
 
       <div class="bottom-menu">
@@ -133,7 +281,7 @@
     </div>
   </div>
 
-  <audio id="audio" src="musicas/musica.mp3" loop></audio>
+  <audio id="audio" src="musicas/1.mp3" loop></audio>
 
   <script>
 
@@ -146,7 +294,7 @@
       const h=Math.floor((diff/(1000*60*60))%24);
       const m=Math.floor((diff/(1000*60))%60);
       const s=Math.floor((diff/1000)%60);
-      el.textContent=`Juntos há ${d} dias · ${h}h ${m}m ${s}s`;
+      el.textContent=`${d} dias · ${h}h ${m}m ${s}s`;
     }
     const timer=document.getElementById("timer");
     setInterval(()=>atualizarTimerEl(timer),1000);
@@ -186,6 +334,22 @@
 
     /* MÚSICA */
     const audio=document.getElementById("audio");
+    const musicBtn=document.getElementById("musicBtn");
+    let tocando=true;
+
+    musicBtn.onclick=()=>{
+      if(tocando){
+        audio.pause();
+        musicBtn.textContent="🔇";
+        musicBtn.classList.add("paused");
+      }else{
+        audio.play();
+        musicBtn.textContent="🎵";
+        musicBtn.classList.remove("paused");
+      }
+      tocando=!tocando;
+    };
+
     document.getElementById("startBtn").onclick=()=>{
       audio.play().catch(()=>{});
       document.getElementById("splash").style.opacity="0";
