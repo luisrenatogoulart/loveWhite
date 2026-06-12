@@ -1,9 +1,237 @@
-Para baixar videos do youtube use:
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galeria — Nosso Lugar</title>
+  <style>
+    :root{--accent1:#ff6aa3;--accent2:#ff2d7a;--glass: rgba(255,240,245,0.22);}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Arial';-webkit-font-smoothing:antialiased}
+    body{
+      display:flex;align-items:center;justify-content:center;overflow:hidden;
+      background: radial-gradient(circle at 10% 10%, #ffd9ea 0%, #ffb3d9 30%, #ff4d88 60%, #8a135f 100%);
+    }
 
-pip install --upgrade yt-dlp (instalar yt-dlp)
-python3 -m venv .venv (criar o ambiente .venv)
-source .venv/bin/activate (entrar no ambiente venv)
-yt-dlp --extract-audio --audio-format mp3 [URL_DO_VIDEO]
-deactivate (sair  do ambiente venv)
-depois procurar o venv e apagar a pasta.
+    /* SPLASH / TELA INICIAL */
+    #splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.5));z-index:80}
+    .splash-card{width:88vw;max-width:420px;padding:28px;border-radius:18px;background:var(--glass);backdrop-filter:blur(12px);text-align:center;border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 40px rgba(200,60,120,0.18)}
+    .splash-card h1{margin:0 0 8px;font-size:20px;color:#fff}
+    .splash-card p{margin:0 0 18px;color:#ffe6f4}
+    .start-btn{background:linear-gradient(135deg,var(--accent1),var(--accent2));border:none;color:#fff;padding:12px 18px;border-radius:12px;font-size:16px;cursor:pointer;box-shadow:0 8px 30px rgba(255,90,150,0.25)}
+
+    /* QUADRO CENTRAL */
+    .stage{width:94vw;max-width:520px;height:86vh;max-height:760px;position:relative;perspective:1200px}
+    .frame{position:absolute;inset:0;margin:auto;width:100%;height:100%;border-radius:22px;background:var(--glass);backdrop-filter:blur(14px);overflow:hidden;border:2px solid rgba(255,255,255,0.14);box-shadow:0 20px 60px rgba(150,30,80,0.15)}
+
+    /* CARROSSEL 3D */
+    .carousel{position:relative;height:100%;width:100%;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d}
+    .slide{position:absolute;left:50%;top:50%;transform-origin:center center;background:#000;border-radius:16px;overflow:hidden;width:82%;height:76%;transition:transform 900ms cubic-bezier(.2,.9,.3,1),opacity 600ms;box-shadow:0 18px 40px rgba(0,0,0,0.45)}
+    .slide img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .slide[data-pos="0"]{transform:translate(-50%,-50%) translateZ(0px) scale(1);opacity:1;z-index:50;border:6px solid rgba(255,255,255,0.06)}
+    .slide[data-pos="-1"], .slide[data-pos="1"]{
+      transform:translate(-50%,-50%) translateX(calc(var(--pos)* -40%)) translateZ(-120px) rotateY(calc(var(--pos)* 20deg)) scale(.82);
+      opacity:.9;z-index:40;
+    }
+    .slide[data-pos="-2"], .slide[data-pos="2"]{
+      transform:translate(-50%,-50%) translateX(calc(var(--pos)* -70%)) translateZ(-260px) rotateY(calc(var(--pos)* 25deg)) scale(.62);
+      opacity:.6;z-index:30;
+    }
+    .slide.hidden{opacity:0;pointer-events:none}
+
+    /* Legenda */
+    .caption{
+      position:absolute;bottom:0;left:0;right:0;padding:10px 15px;background:rgba(0,0,0,0.6);
+      color:white;font-size:14px;text-align:center;z-index:60;opacity:0;transform:translateY(100%);transition:opacity .3s,transform .3s;
+    }
+    .slide[data-pos="0"] .caption{opacity:1;transform:translateY(0)}
+
+    .top-hud{position:absolute;left:50%;transform:translateX(-50%);top:14px;color:#fff;z-index:70;text-shadow:0 4px 18px rgba(0,0,0,0.5);font-weight:700;font-size:18px}
+
+    /* BOTÕES SUPERIORES */
+    .top-buttons {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      gap: 10px;
+      z-index: 90;
+    }
+
+    .msg-btn, .back {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background .3s, transform .3s;
+    }
+
+    .msg-btn:hover, .back:hover {
+      background: rgba(255, 110, 170, 0.5);
+      transform: scale(1.08);
+    }
+
+    /* BOTÃO DE MÚSICA */
+    .music-btn {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #fff;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background .3s, transform .3s, filter .3s;
+    }
+    .music-btn:hover {
+      background: rgba(255, 110, 170, 0.55);
+      transform: scale(1.1);
+    }
+    .music-btn.paused {
+      filter: grayscale(70%) brightness(0.7);
+    }
+
+    /* Botões direita/esquerda */
+    .arrow{
+      position:absolute;top:50%;transform:translateY(-50%);
+      font-size:40px;color:white;background:rgba(0,0,0,0.25);
+      border:0;border-radius:12px;padding:8px 14px;cursor:pointer;
+      z-index:70;backdrop-filter:blur(6px);
+    }
+    .arrow:hover{background:rgba(255,255,255,0.15)}
+    #prev{left:10px}
+    #next{right:10px}
+
+    /* Timer */
+    .bottom-menu{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;z-index:70}
+    .timer{font-size:14px;padding:6px 12px;background:rgba(255,255,255,0.1);border-radius:999px;color:white}
+
+    .heart{position:fixed;font-size:20px;pointer-events:none;z-index:30;opacity:.85}
+
+  </style>
+</head>
+<body>
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <div class="splash-card">
+      <h1>Bem-vinda, meu amor ❤️</h1>
+      <p>Preparei isso com todo carinho, só para você.</p>
+      <button class="start-btn" id="startBtn">Entrar</button>
+    </div>
+  </div>
+
+  <!-- CENA -->
+  <div class="stage">
+    <div class="frame">
+
+      <div class="top-hud">Nosso Lugar</div>
+
+      <div class="top-buttons">
+        <button class="back" onclick="location.href='index.html'">⟵</button>
+        <button class="msg-btn" onclick="location.href='mensagem.html'">💌</button>
+
+        <!-- BOTÃO DE MÚSICA -->
+        <button class="music-btn" id="musicBtn">🎵</button>
+      </div>
+
+      <button class="arrow" id="prev">❮</button>
+      <button class="arrow" id="next">❯</button>
+
+      <div class="carousel" id="carousel">
+        <!-- suas imagens aqui -->
+      </div>
+
+      <div class="bottom-menu">
+        <span class="timer" id="timer">Juntos há 0 dias</span>
+      </div>
+
+    </div>
+  </div>
+
+  <audio id="audio" src="musicas/1.mp3" loop></audio>
+
+  <script>
+
+    /* TIMER */
+    function atualizarTimerEl(el){
+      const inicio=new Date('2025-08-22T00:00:00');
+      const agora=new Date();
+      const diff=agora-inicio;
+      const d=Math.floor(diff/(1000*60*60*24));
+      const h=Math.floor((diff/(1000*60*60))%24);
+      const m=Math.floor((diff/(1000*60))%60);
+      const s=Math.floor((diff/1000)%60);
+      el.textContent=`${d} dias · ${h}h ${m}m ${s}s`;
+    }
+    const timer=document.getElementById("timer");
+    setInterval(()=>atualizarTimerEl(timer),1000);
+    atualizarTimerEl(timer);
+
+    /* PARTÍCULAS */
+    function criarParticulas(){
+      for(let i=0;i<12;i++){
+        const h=document.createElement("div");
+        h.className="heart";h.textContent="💖";
+        h.style.left=Math.random()*100+"vw";
+        h.style.top="100vh";
+        h.style.transition="transform 6s linear,opacity 6s";
+        document.body.appendChild(h);
+        setTimeout(()=>{h.style.transform="translateY(-120vh)";h.style.opacity="0"},100);
+        setTimeout(()=>h.remove(),6500);
+      }
+    }
+    setInterval(criarParticulas,2000);
+
+    /* CARROSSEL */
+    const slides=[...document.querySelectorAll(".slide")];
+    let current=0;
+
+    function layout(){
+      slides.forEach((s,i)=>{
+        const pos=i-current;
+        s.style.setProperty("--pos",pos);
+        s.dataset.pos=pos;
+        s.classList.toggle("hidden",Math.abs(pos)>3);
+      });
+    }
+    layout();
+
+    document.getElementById("prev").onclick=()=>{ current=(current-1+slides.length)%slides.length; layout(); }
+    document.getElementById("next").onclick=()=>{ current=(current+1)%slides.length; layout(); }
+
+    /* MÚSICA */
+    const audio=document.getElementById("audio");
+    const musicBtn=document.getElementById("musicBtn");
+    let tocando=true;
+
+    musicBtn.onclick=()=>{
+      if(tocando){
+        audio.pause();
+        musicBtn.textContent="🔇";
+        musicBtn.classList.add("paused");
+      }else{
+        audio.play();
+        musicBtn.textContent="🎵";
+        musicBtn.classList.remove("paused");
+      }
+      tocando=!tocando;
+    };
+
+    document.getElementById("startBtn").onclick=()=>{
+      audio.play().catch(()=>{});
+      document.getElementById("splash").style.opacity="0";
+      setTimeout(()=>document.getElementById("splash").remove(),600);
+    };
+
+  </script>
+</body>
+</html>
 

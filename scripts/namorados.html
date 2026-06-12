@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Quiz do Nosso Amor 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:radial-gradient(circle at top,#ff4f87 0%,#8b004f 35%,#2b001f 100%);
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    padding:20px;
+}
+
+/* CARD */
+
+.container{
+    width:100%;
+    max-width:750px;
+    padding:35px;
+    border-radius:30px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:
+        0 8px 32px rgba(0,0,0,.3),
+        0 0 30px rgba(255,80,150,.4);
+    text-align:center;
+    z-index:2;
+}
+
+h1{
+    font-size:2rem;
+    margin-bottom:25px;
+    color:#ffd4e5;
+    text-shadow:
+        0 0 10px #ff77b7,
+        0 0 20px #ff77b7;
+}
+
+.progresso{
+    color:#ffd7e6;
+    margin-bottom:20px;
+}
+
+.pergunta{
+    font-size:1.6rem;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.alternativa{
+    width:100%;
+    padding:16px;
+    margin:12px 0;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,#ff4f87,#ff7ca8);
+    color:white;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.alternativa:hover{
+    transform:translateY(-3px) scale(1.02);
+    box-shadow:0 0 20px rgba(255,120,180,.7);
+}
+
+.mensagem{
+    margin-top:20px;
+    font-size:1.2rem;
+    color:#ffe6f0;
+    font-weight:bold;
+}
+
+.presente{
+    display:none;
+    margin-top:30px;
+}
+
+.btn-presente{
+    border:none;
+    padding:16px 28px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#ff0066,#ff66a3);
+    color:white;
+    font-size:1.1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+.btn-voltar{
+    margin-top:15px;
+    border:none;
+    padding:14px 25px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#6c63ff,#8a84ff);
+    color:white;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-voltar:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 20px rgba(138,132,255,.8);
+}
+
+.btn-presente:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 25px rgba(255,100,170,.8);
+}
+
+.carta{
+    display:none;
+    margin-top:25px;
+    background:rgba(255,255,255,0.12);
+    padding:25px;
+    border-radius:20px;
+    text-align:left;
+    line-height:1.8;
+    color:#fff0f7;
+    animation:aparecer .8s ease;
+
+    max-height:400px;
+    overflow-y:auto;
+}
+
+.carta::-webkit-scrollbar{
+    width:8px;
+}
+
+.carta::-webkit-scrollbar-track{
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+}
+
+.carta::-webkit-scrollbar-thumb{
+    background:#ff66a3;
+    border-radius:10px;
+}
+
+.carta::-webkit-scrollbar-thumb:hover{
+    background:#ff4f87;
+}
+
+.carta h3{
+    text-align:center;
+    margin-bottom:15px;
+    color:#ffd6ea;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* CORAÇÕES */
+
+.coracao{
+    position:fixed;
+    bottom:-30px;
+    width:22px;
+    height:22px;
+    background:#ff4f87;
+    transform:rotate(45deg);
+    animation:subir 8s linear forwards;
+    opacity:.8;
+}
+
+.coracao::before,
+.coracao::after{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    background:#ff4f87;
+    border-radius:50%;
+}
+
+.coracao::before{
+    top:-11px;
+}
+
+.coracao::after{
+    left:-11px;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(0) rotate(45deg);
+    }
+    to{
+        transform:translateY(-120vh) rotate(45deg);
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💖 Quiz do Nosso Amor 💖</h1>
+
+    <div class="progresso" id="progresso"></div>
+
+    <div class="pergunta" id="pergunta"></div>
+
+    <div id="alternativas"></div>
+
+    <div class="mensagem" id="mensagem"></div>
+
+    <div class="presente" id="presente">
+
+        <h2>🎉 Você acertou tudo! 🎉</h2>
+
+        <br>
+
+        <button class="btn-presente" onclick="abrirPresente()">
+            Abrir meu presente virtual ❤️
+        </button>
+
+        <button class="btn-voltar" onclick="voltarInicio()">
+    🏠 Voltar ao Início
+        </button>
+
+        
+<div class="carta" id="carta">
+
+    <h3>💌 Para Você 💌</h3>
+
+    <p>
+        Dizem que o amor está nos detalhes, e quando pensei no que te dar, quis escolher coisas que fizessem parte do seu dia a dia, cuidando de você e te lembrando do quanto você é especial para mim em cada momento.
+    </p>
+
+    <p>
+        Para deixar a sua boca ainda mais irresistível, macia e com aquele brilho que me dá vontade de te beijar a cada segundo. É um toque sutil para acariciar os lábios que guardam o sorriso mais lindo que já vi e que eu tenho a sorte de chamar de meu. Prometo que ele vai deixar os nossos momentos juntos ainda mais doces.
+    </p>
+
+    <p>
+        Feito para realçar a profundidade e o mistério do seu olhar, aquele mesmo que me ganha por inteiro. Quero que ele destaque a beleza dos seus olhos quando você se arruma para si mesma ou para os nossos encontros, me deixando ainda mais encantado por você.
+    </p>
+
+    <p>
+        Um detalhe brilhante e delicado para a sua orelha. Escolhi esse formato porque ele simboliza algo raro, puro e precioso, que só existe uma versão no mundo inteiro — exatamente como você.
+    </p>
+
+    <p>
+        O aconchego perfeito para te aquecer e cuidar de você naqueles dias frios em que tudo o que eu quero é te ver relaxada e confortável. Tem um design fofo e macio que vai abraçar seus pés, deixando os seus momentos de descanso ainda mais gostosos e quentinhos.
+    </p>
+
+    <p>
+        Te amo bebê ouisey. ❤️
+    </p>
+</div>
+
+
+    </div>
+
+</div>
+
+<script>
+
+const perguntas = [
+
+{
+    pergunta:"22 te lembra o que?",
+    alternativas:[
+        "Um Número aleatório",
+        "Um Dia",
+        "Meu saldo no banco",
+        "Bolsonaro 2022"
+    ],
+    correta:1
+},
+
+{
+    pergunta:"nham nham nham nham... o que isso te lembra?",
+    alternativas:[
+        "Espirra",
+        "Estifler",
+        "Espinha",
+        "Estômago roncando"
+    ],
+    correta:0
+},
+
+{
+    pergunta:"Restaurante te lembra o que?",
+    alternativas:[
+        "Garçom",
+        "Comida",
+        "Caro pa krai",
+        "Manobrista"
+    ],
+    correta:3
+},
+
+{
+    pergunta:"Declaração te lembra o que?",
+    alternativas:[
+        "Tomorrowland",
+        "Rodeio de Monte Belo",
+        "Barretão",
+        "Muzambinho"
+    ],
+    correta:2
+},
+
+{
+    pergunta:"O quanto eu te amo?",
+    alternativas:[
+        "Pouco",
+        "Bastante",
+        "Muito",
+        "Infinito"
+    ],
+    correta:3
+}
+
+];
+
+let atual = 0;
+
+function mostrarPergunta(){
+
+    document.getElementById("mensagem").innerHTML = "";
+
+    const p = perguntas[atual];
+
+    document.getElementById("progresso").innerHTML =
+        `Pergunta ${atual + 1} de ${perguntas.length}`;
+
+    document.getElementById("pergunta").innerHTML =
+        p.pergunta;
+
+    const alternativas =
+        document.getElementById("alternativas");
+
+    alternativas.innerHTML = "";
+
+    p.alternativas.forEach((alt,index)=>{
+
+        const btn = document.createElement("button");
+
+        btn.className = "alternativa";
+        btn.innerText = alt;
+
+        btn.onclick = ()=>{
+
+            if(index === p.correta){
+
+                document.querySelectorAll(".alternativa")
+                .forEach(b => b.disabled = true);
+
+                btn.innerHTML += " 🌹❤️";
+
+                document.getElementById("mensagem").innerHTML =
+                "💖 Acertou meu amor! 💖";
+
+                setTimeout(()=>{
+
+                    atual++;
+
+                    if(atual < perguntas.length){
+                        mostrarPergunta();
+                    }else{
+                        mostrarFinal();
+                    }
+
+                },1200);
+
+            }else{
+
+                alert("💔 Errou! Tente novamente amor.");
+
+            }
+
+        };
+
+        alternativas.appendChild(btn);
+
+    });
+
+}
+
+function mostrarFinal(){
+
+    document.getElementById("progresso").innerHTML = "";
+
+    document.getElementById("pergunta").innerHTML =
+    "💖 Feliz Dia dos Namorados 💖";
+
+    document.getElementById("alternativas").innerHTML = "";
+
+    document.getElementById("mensagem").innerHTML =
+    "Espero que goste do seu presente virtual ❤️";
+
+    document.getElementById("presente").style.display = "block";
+
+}
+
+function abrirPresente(){
+
+    document.getElementById("carta").style.display = "block";
+
+}
+
+function criarCoracao(){
+
+    const coracao = document.createElement("div");
+
+    coracao.classList.add("coracao");
+
+    coracao.style.left = Math.random()*100 + "vw";
+
+    document.body.appendChild(coracao);
+
+    setTimeout(()=>{
+        coracao.remove();
+    },8000);
+
+}
+
+function voltarInicio(){
+
+    window.location.href = "../index.html";
+
+}
+
+setInterval(criarCoracao,500);
+
+mostrarPergunta();
+
+</script>
+
+</body>
+</html>
