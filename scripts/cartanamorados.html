@@ -1,0 +1,281 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>💌 Meu Presente Para Você 💌</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+
+    background:
+    radial-gradient(circle at top,
+    #ff4f87 0%,
+    #8b004f 40%,
+    #2b001f 100%);
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    overflow:hidden;
+}
+
+/* Card principal */
+
+.carta-container{
+
+    width:100%;
+    max-width:900px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,.3),
+    0 0 30px rgba(255,80,150,.4);
+
+    color:white;
+
+    animation:aparecer 1s ease;
+}
+
+h1{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+    color:#ffd4e5;
+
+    text-shadow:
+    0 0 10px #ff77b7,
+    0 0 20px #ff77b7;
+}
+
+p{
+
+    line-height:1.9;
+
+    margin-bottom:18px;
+
+    color:#fff5fa;
+
+    text-align:justify;
+}
+
+.assinatura{
+
+    text-align:center;
+
+    margin-top:35px;
+
+    font-size:1.3rem;
+
+    color:#ffd6ea;
+}
+
+.btn-voltar{
+
+    display:block;
+
+    margin:30px auto 0;
+
+    border:none;
+
+    padding:15px 25px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff0066,
+        #ff66a3
+    );
+
+    color:white;
+
+    font-size:1rem;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.btn-voltar:hover{
+
+    transform:scale(1.05);
+}
+
+/* Scroll */
+
+.carta-container::-webkit-scrollbar{
+    width:8px;
+}
+
+.carta-container::-webkit-scrollbar-thumb{
+    background:#ff66a3;
+    border-radius:10px;
+}
+
+/* Corações */
+
+.coracao{
+
+    position:fixed;
+
+    bottom:-30px;
+
+    width:22px;
+
+    height:22px;
+
+    background:#ff4f87;
+
+    transform:rotate(45deg);
+
+    animation:subir 8s linear forwards;
+}
+
+.coracao::before,
+.coracao::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:22px;
+    height:22px;
+
+    background:#ff4f87;
+
+    border-radius:50%;
+}
+
+.coracao::before{
+    top:-11px;
+}
+
+.coracao::after{
+    left:-11px;
+}
+
+@keyframes subir{
+
+    from{
+        transform:translateY(0) rotate(45deg);
+    }
+
+    to{
+        transform:translateY(-120vh) rotate(45deg);
+        opacity:0;
+    }
+}
+
+@keyframes aparecer{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="carta-container">
+
+    <h1>💌 Meu Presente Para Você 💌</h1>
+    <p>
+        Dizem que o amor está nos detalhes, e quando pensei no que te dar, quis escolher coisas que fizessem parte do seu dia a dia, cuidando de você e te lembrando do quanto você é especial para mim em cada momento.
+    </p>
+
+    <p>
+        Para deixar a sua boca ainda mais irresistível, macia e com aquele brilho que me dá vontade de te beijar a cada segundo. É um toque sutil para acariciar os lábios que guardam o sorriso mais lindo que já vi e que eu tenho a sorte de chamar de meu. Prometo que ele vai deixar os nossos momentos juntos ainda mais doces.
+    </p>
+
+    <p>
+        Feito para realçar a profundidade e o mistério do seu olhar, aquele mesmo que me ganha por inteiro. Quero que ele destaque a beleza dos seus olhos quando você se arruma para si mesma ou para os nossos encontros, me deixando ainda mais encantado por você.
+    </p>
+
+    <p>
+        Um detalhe brilhante e delicado para a sua orelha. Escolhi esse formato porque ele simboliza algo raro, puro e precioso, que só existe uma versão no mundo inteiro — exatamente como você.
+    </p>
+
+    <p>
+        O aconchego perfeito para te aquecer e cuidar de você naqueles dias frios em que tudo o que eu quero é te ver relaxada e confortável. Tem um design fofo e macio que vai abraçar seus pés, deixando os seus momentos de descanso ainda mais gostosos e quentinhos.
+    </p>
+
+    <p>
+        Te amo bebê ouisey. ❤️
+    </p>
+    <div class="assinatura">
+        ❤️ Te amo infinitamente ❤️
+    </div>
+
+    <button class="btn-voltar"
+            onclick="window.location.href='../index.html'">
+        🏠 Voltar ao Início
+    </button>
+
+</div>
+
+<script>
+
+function criarCoracao(){
+
+    const c = document.createElement("div");
+
+    c.classList.add("coracao");
+
+    c.style.left = Math.random()*100 + "vw";
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+        c.remove();
+    },8000);
+}
+
+setInterval(criarCoracao,500);
+
+</script>
+
+</body>
+</html>
+```
